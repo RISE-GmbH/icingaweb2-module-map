@@ -1,0 +1,57 @@
+<?php
+
+?>
+<div class="controls">
+    <?= /** @var \Icinga\Web\Widget\Tabs $tabs */ $tabs ?>
+</div>
+<div class="content ignore-map-css">
+    <div class="actions">
+        <?= $this->qlink(
+            $this->translate('Create a new custom map') ,
+            'map/mapping/new',
+            null,
+            [
+                'class'             => 'button-link',
+                'data-base-target'  => '_next',
+                'icon'              => 'plus',
+                'title'             => $this->translate('Create a custom map')
+            ]
+        ) ?>
+    </div>
+<?php /** @var \Icinga\Repository\RepositoryQuery $configs */ if (! $configs->hasResult()): ?>
+    <p><?= $this->escape($this->translate('No custom map configured yet.')) ?></p>
+<?php else: ?>
+    <table class="common-table table-row-selectable" data-base-target="_next">
+        <thead>
+            <tr>
+                <th><?= $this->escape($this->translate('Name')) ?></th>
+                <th><?= $this->escape($this->translate('Author')) ?></th>
+                <th><?= $this->escape($this->translate('Priority')) ?></th>
+                <th><?= $this->escape($this->translate('url')) ?></th>
+                <th><?= $this->escape($this->translate('enabled')) ?></th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($configs as $config): ?>
+            <tr>
+                <td><?= $this->qlink($this->escape($config->name), 'map/mapping/update', ['id' => $this->escape($config->name)]) ?></td>
+                <td><?= $this->escape($config->author) ?></td>
+                <td><?= $this->escape($config->priority) ?></td>
+                <td><?= $this->escape($config->url) ?></td>
+                <td><?= $config->enabled==1?$this->translate('yes'):$this->translate('no') ?></td>
+                <td class="icon-col"><?= $this->qlink(
+                        null,
+                        'map/mapping/delete',
+                        array('id' => $this->escape($config->name)),
+                        array(
+                            'class' => 'action-link',
+                            'icon'  => 'cancel',
+                            'title' => $this->translate('Remove this custom map')
+                        )
+                    ) ?></td>
+            </tr>
+        <?php endforeach ?>
+        </tbody>
+    </table>
+<?php endif ?>
+</div>

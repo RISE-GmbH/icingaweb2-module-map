@@ -598,7 +598,16 @@
                         }
                     }]
                 }).addTo(cache[id].map);
+                L.easyButton({
+                    states: [{
+                        icon: 'icon-book', title: translation['btn-save'], onClick: function (btn, map) {
+                            var dashletUri = "map" + window.location.search;
+                            var uri = icinga.config.baseUrl + "/" + "map/mapping/new?url=" + encodeURIComponent(dashletUri);
 
+                            window.open(uri, "_self")
+                        }
+                    }]
+                }).addTo(cache[id].map);
                 L.easyButton({
                     states: [{
                         icon: 'icon-resize-full-alt',
