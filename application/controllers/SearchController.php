@@ -5,6 +5,7 @@ namespace Icinga\Module\Map\Controllers;
 use Icinga\Data\Filter\Filter;
 use Icinga\Module\Icingadb\Model\Host;
 use Icinga\Module\Icingadb\Model\Service;
+use Icinga\Module\Map\OpenStreetMapGeocoder;
 use ipl\Stdlib\Filter as IplFilter;
 use Icinga\Module\Map\Web\Controller\MapController;
 use Icinga\Module\Monitoring\DataView\DataView;
@@ -21,7 +22,9 @@ class SearchController extends MapController
 
         $apiKey = $this->config()->get("map", "opencage_apikey", "");
         if ($apiKey != "") {
-            $this->geocoder = $geocoder = new Geocoder($apiKey);
+            $this->geocoder = new Geocoder($apiKey);
+        }else{
+            $this->geocoder = new OpenStreetMapGeocoder();
         }
     }
 
@@ -32,7 +35,7 @@ class SearchController extends MapController
         return $dataView;
     }
 
-    private function opencageSearch($query)
+    private function gecodeSearch($query)
     {
         $results = [];
 
@@ -239,7 +242,7 @@ class SearchController extends MapController
             "services" => []
         ];
 
-        $results["ocg"] = $this->opencageSearch($query);
+        $results["ocg"] = $this->gecodeSearch($query);
         if (!$lite) {
             $results["hosts"] = $this->hostSearch($query);
             $results["services"] = $this->serviceSearch($query);

@@ -70,5 +70,5 @@ abstract class AbstractGeocoder
         return $ret;
     }
 
-    abstract public function geocode($query);
+    abstract public function geocode($query, $optParams);
 }
