@@ -9,6 +9,7 @@ use Icinga\Data\Filter\Filter;
 use Icinga\Exception\Http\HttpMethodNotAllowedException;
 use Icinga\Forms\RepositoryForm;
 use Icinga\Module\Map\MappingIniRepository;
+use Icinga\Module\Map\ProvidedHook\Icingadb\IcingadbSupport;
 use Icinga\Module\Map\Util\CustomUrlMigrator;
 
 /**
@@ -179,7 +180,7 @@ class MappingForm extends RepositoryForm
         );
 
 
-        if($formData['url'] != CustomUrlMigrator::transformUrl(\ipl\Web\Url::fromPath($formData['url']))->getRelativeUrl() && Module::exists("icingadb") &&  !Module::exists("monitoring")){
+        if($formData['url'] != CustomUrlMigrator::transformUrl(\ipl\Web\Url::fromPath($formData['url']))->getRelativeUrl() && Module::exists("icingadb") && IcingadbSupport::useIcingaDbAsBackend()){
             $this->addElement(
                 'submit',
                 'btn_migrate',
