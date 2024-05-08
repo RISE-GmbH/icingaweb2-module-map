@@ -33,7 +33,6 @@
 
 .leaflet-control-ocd-search-error, .leaflet-control-ocd-search-form input, .leaflet-control-ocd-search-form ul {
     border: 0;
-    color: transparent;
     background: #fff
 }
 
