@@ -1,7 +1,7 @@
 <?php
 
 use Icinga\Application\Modules\Module;
-use Icinga\Module\Cube\ProvidedHook\Icingadb\IcingadbSupport;
+use Icinga\Module\Map\ProvidedHook\Icingadb\IcingadbSupport;
 use OpenCage\Loader\CompatLoader;
 
 $this->provideHook('monitoring/HostActions');
